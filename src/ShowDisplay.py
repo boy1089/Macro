@@ -3,11 +3,11 @@ import threading
 import sys
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
-from PyQt5 import QtCore
 from PIL import ImageGrab
 import numpy as np
 
 running = False
+
 def run():
     global running
     cap = ImageGrab.grab()
@@ -41,20 +41,28 @@ def onExit():
     print("exit")
     stop()
 
+def patternMatching():
+    img = cv2.imread(r'C:\Users\boy10\Desktop\git\private\macro\resource\pycharm.png')
+
+
 app = QtWidgets.QApplication([])
 win = QtWidgets.QWidget()
 vbox = QtWidgets.QVBoxLayout()
 label = QtWidgets.QLabel()
 btn_start = QtWidgets.QPushButton("Camera On")
 btn_stop = QtWidgets.QPushButton("Camera Off")
+btn_patternMatching = QtWidgets.QPushButton("Pattern Matching")
+
 vbox.addWidget(label)
 vbox.addWidget(btn_start)
 vbox.addWidget(btn_stop)
+vbox.addWidget(btn_patternMatching)
 win.setLayout(vbox)
 win.show()
 
 btn_start.clicked.connect(start)
 btn_stop.clicked.connect(stop)
+btn_patternMatching.clicked.connect(patternMatching)
 app.aboutToQuit.connect(onExit)
 
 sys.exit(app.exec_())
