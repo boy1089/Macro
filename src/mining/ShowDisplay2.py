@@ -57,7 +57,7 @@ class MyApp(QWidget):
 
             added_image = cv2.addWeighted(self.overlay,0.4,self.img,0.9,0)
 
-            h, w, c = added_image.shape
+            h, w, c = added_image.shapex
             qImg = QtGui.QImage(added_image.data, w, h, w*c, QtGui.QImage.Format_RGB888)
             pixmap = QtGui.QPixmap.fromImage(qImg)
             self.label.setPixmap(pixmap)

@@ -22,6 +22,7 @@ def run():
             label.setPixmap(pixmap)
         else:
             QtWidgets.QMessageBox.about(win, "Error", "Cannot read frame.")
+
             print("cannot read frame.")
             break
     cap.release()
