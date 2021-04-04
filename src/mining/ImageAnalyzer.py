@@ -18,27 +18,27 @@ class ImageAnalyzer :
     def findContours(self):
 
         img_gray = cv2.cvtColor(self.img,cv2.COLOR_BGR2GRAY)
-        print('1')
-        ret, thresh = cv2.threshold(img_gray, 127, 255,0)
-        print('2')
+        # ret, thresh = cv2.threshold(img_gray, 127, 255,0)
+        thresh = cv2.adaptiveThreshold(img_gray,255,cv2.ADAPTIVE_THRESH_MEAN_C,
+                                       cv2.THRESH_BINARY,31,2)
         contours,hierarchy = cv2.findContours(thresh,2,1)
-        print('3')
+        print('# of contours : ', len(contours))
         cnt = contours[0]
-        print('4')
+        #
         # hull = cv2.convexHull(cnt,returnPoints = False)
         # defects = cv2.convexityDefects(cnt,hull)
-        #
+        # print(defects.shape[0])
         # for i in range(defects.shape[0]):
-        #     print(i)
+        #     print("i: ",   i)
+        #     s,e,f,d = defects[i,0]
         #     start = tuple(cnt[s][0])
         #     end = tuple(cnt[e][0])
         #     far = tuple(cnt[f][0])
-        #     cv2.line(img_gray,start,end,[0,255,0],2)
-        #     cv2.circle(img_gray,far,5,[0,0,255],-1  )
-        # # print('6')
-        self.img_processed = np.asarray(img_gray)
-        print('7')
-        print(self.img_processed)
+        #     cv2.line(self.img,start,end,[0,255,0],2)
+        #     cv2.circle(self.img,far,5,[0,0,255],-1  )
+        cv2.drawContours(self.img, cnt, -1, (0, 255, 0), 3)
+
+        self.img_processed = np.asarray(self.img)
 
 
     def doThresholding(self):

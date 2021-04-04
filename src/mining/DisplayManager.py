@@ -11,13 +11,12 @@ import matplotlib.pyplot as plt
 class DisplayManager :
 
     def __init__(self, grabber, label, label2):
+
         self.running = False
         self.grabber = grabber
         self.label = label
         self.label2 = label2
         self.ImageAnalyzer = ImageAnalyzer.ImageAnalyzer()
-
-        pass
 
     def isRunning(self):
         return self.running
@@ -39,16 +38,17 @@ class DisplayManager :
             pixmap = QtGui.QPixmap.fromImage(qImg)
             self.label.setPixmap(pixmap)
             try:
+                self.analyzeImage()
                 self.label2.setPixmap(self.pixmap2)
             except :
                 self.label2.setPixmap(pixmap)
                 pass
 
 
-
     def start(self):
         self.running = True
         th = threading.Thread(target = self.run)
+
         th.start()
         print("started..")
 
@@ -62,18 +62,14 @@ class DisplayManager :
 
     def analyzeImage(self):
         self.ImageAnalyzer.getImage(self.img)
-        print('a')
         self.ImageAnalyzer.findContours()
-        # print(self.ImageAnalyzer.img())
-        # plt.imshow(self.ImageAnalyzer.img())
-        # plt.imsave(self.ImageAnalyzer.img(), r'C:\Users\boy10\Desktop\git\private\macro\resource\1.png')
 
+        # print(self.ImageAnalyzer.img())
         img = np.asarray(self.ImageAnalyzer.img_processed)
 
-        h, w = img.shape
+        h, w, c = img.shape
         added_image = cv2.addWeighted(img, 0.5, img, 0.5, 0)
-        print(h, w)
-        qImg = QtGui.QImage(added_image, w, h, w, QtGui.QImage.Format_Indexed8)
+        qImg = QtGui.QImage(added_image, w, h, w*c, QtGui.QImage.Format_RGB888)
 
         pixmap = QtGui.QPixmap.fromImage(qImg)
 
