@@ -15,7 +15,8 @@ class MyApp(QWidget):
         self.initUI()
         self.DisplayManager = DisplayManager.DisplayManager(self.Grabber,
                                                             self.label,
-                                                            self.label_processed)
+                                                            self.label_processed,
+                                                            self.label_inline)
         self.connectUI()
 
 
@@ -28,7 +29,7 @@ class MyApp(QWidget):
 
         self.label = QtWidgets.QLabel()
         self.label_processed = QtWidgets.QLabel()
-
+        self.label_inline = QtWidgets.QLabel()
         self.setImageSize()
 
         self.btn_start = QtWidgets.QPushButton("Camera On")
@@ -42,7 +43,7 @@ class MyApp(QWidget):
         vbox.addWidget(self.btn_patternMatching)
 
         vbox2.addWidget(self.label_processed)
-
+        vbox2.addWidget(self.label_inline)
         hbox.addLayout(vbox)
         hbox.addLayout(vbox2)
 
